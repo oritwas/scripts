@@ -1,0 +1,4 @@
+
+./src/rados ls -p default.rgw.buckets.data
+
+./src/rados getxattr -p default.rgw.buckets.data 2529d0af-774f-4bf8-adc4-cf9be5012934.4123.2_object1 user.rgw.olh.idtag

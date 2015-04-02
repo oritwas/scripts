@@ -1,0 +1,7 @@
+[user]
+	name = Orit Wasserman
+	email = owasserm@redhat.com
+[core]
+	editor = emacs
+[alias]
+lol = log --graph --decorate --pretty=oneline --abbrev-commit

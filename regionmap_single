@@ -1,0 +1,55 @@
+{
+    "regions": [
+        {
+            "key": "skinny",
+            "val": {
+                "name": "skinny",
+                "api_name": "slim",
+                "is_master": "true",
+                "endpoints": [
+                    "http:\/\/skinny:8000\/"
+                ],
+                "hostnames": [],
+                "master_zone": "skinny-1",
+                "zones": [
+                    {
+                        "name": "skinny-1",
+                        "endpoints": [
+                            "http:\/\/skinny:8000\/"
+                        ],
+                        "log_meta": "true",
+                        "log_data": "true",
+                        "bucket_index_max_shards": 0
+                    },
+                    {
+                        "name": "skinny-2",
+                        "endpoints": [
+                            "http:\/\/skinny:8001\/"
+                        ],
+                        "log_meta": "false",
+                        "log_data": "false",
+                        "bucket_index_max_shards": 0
+                    }
+                ],
+                "placement_targets": [
+                    {
+                        "name": "default-placement",
+                        "tags": []
+                    }
+                ],
+                "default_placement": "default-placement"
+            }
+        }
+    ],
+    "master_region": "skinny",
+    "bucket_quota": {
+        "enabled": false,
+        "max_size_kb": -1,
+        "max_objects": -1
+    },
+    "user_quota": {
+        "enabled": false,
+        "max_size_kb": -1,
+        "max_objects": -1
+    }
+}

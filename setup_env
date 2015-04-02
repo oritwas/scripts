@@ -1,0 +1,25 @@
+#!/bin/bash
+
+CEPH_DIR=$HOME/hammer/src
+
+[ "$1" == "" ] && echo "usage: $0 <env>" && exit 1
+
+subdir="$HOME/scripts/env.$1"
+[ -d $subdir ] || ( echo "ERROR: subdir $subdir does not exist"; exit 1 )
+
+env_name=$1
+
+for r in `ls $subdir/regions`; do
+  $CEPH_DIR/radosgw-admin region set < $subdir/regions/$r
+done
+
+for z in `ls $subdir/zones`; do
+  $CEPH_DIR/radosgw-admin zone set --rgw-zone=${z%.zone} < $subdir/zones/$z
+done
+
+[ -e $subdir/default-region ] && $CEPH_DIR/radosgw-admin region default --rgw-region=`cat $subdir/default-region`
+
+$CEPH_DIR/rados -p .rgw.root rm region_info.default > /dev/null 2>&1
+$CEPH_DIR/rados -p .rgw.root rm zone_info.default > /dev/null 2>&1
+
+$CEPH_DIR/radosgw-admin regionmap update
