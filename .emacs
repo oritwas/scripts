@@ -1,4 +1,5 @@
 ;; -*- mode: emacs-lisp -*-
+(package-initialize)
 
 (require 'xcscope)
 (require 'cc-mode)
@@ -7,7 +8,7 @@
 
 (require 'package) 
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "http://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -16,10 +17,8 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 ;; set style
-
-(setq-default c-basic-offset 4 c-default-style "linux")
-(setq-default tab-width 4 indent-tabs-mode t)
-(define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+;;(setq-default c-basic-offset 2 c-default-style "linux")`(setq-default tab-width 8 indent-tabs-mode t)
+;;(define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
 ;; auto repair brackets
 ;;(require 'autopair)
@@ -33,6 +32,7 @@
 
 ;;; auto complete mod
 ;;; should be loaded after yasnippet so that they can work together
+(add-to-list 'load-path "~/.emacs.d/elpa")
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
@@ -61,13 +61,6 @@
 
 ;display column number
 (column-number-mode 1)
-
-
-;;(defun my-c-mode-hook ()
-;;  (setq c-basic-offset 4
-;;        c-indent-level 4
-;;        c-default-style "cc-mode"))
-;;(add-hook 'c-mode-common-hook 'my-c-mode-hook)
 
 ; Allow completions like em-s-region to complete to emacspeak-speak-region
 ;;(partial-completion-mode)
@@ -198,17 +191,19 @@
   (global-set-key (kbd "C-c e") 'emacspeak-set-language-to-english)
   (global-set-key (kbd "C-c d") 'emacspeak-set-language-to-german))
 
-(define-prefix-command 'f8-map nil "f7=grep, f8=compile")
-(define-key f8-map [f8] 'compile)
-(define-key f8-map [f7] 'grep)
-(global-set-key [f8] 'f8-map)
-(custom-set-variables
+(global-set-key (kbd "C-c c") 'compile)
+(global-set-key (kbd "C-c g") 'grep)
+;(define-prefix-command 'f8-map nil "f7=grep, f8=compile")
+;(define-key f8-map [f8] 'compile)
+;(define-key f8-map [f7] 'grep)
+;(global-set-key [f8] 'f8-map)
+;(custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(load-home-init-file t t))
+ '(load-home-init-file t t)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -286,3 +281,33 @@
 ;;       c-indent-level 4
 ;;       c-default-style "cc-mode"))
 ;;(add-hook 'c-mode-common-hook 'my-c-mode-hook)
+
+(c-add-style "my-style" 
+	     '("cc-mode"
+	       (indent-tabs-mode t)        ; use spaces rather than tabs
+	       (c-basic-offset . 2)         ; indent by 2 spaces
+	       (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
+                               (brace-list-open . 0)
+                               (statement-case-open . +)))))
+
+(defun my-c++-mode-hook ()
+  (c-set-style "my-style")        ; use my-style defined above
+  (auto-fill-mode)
+  (c-toggle-auto-hungry-state 1)
+  (c-toggle-auto-state 1)
+  (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+)
+
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
+(setq-default show-trailing-whitespace t)
+
+(load-file "/home/owasserm/emacs-for-python/epy-init.el")
+(add-to-list 'load-path "/home/owasserm/emacs-for-python/") ;; tell where to load the various files
+(require 'epy-setup)      ;; It will setup other loads, it is required!
+(require 'epy-python)     ;; If you want the python facilities [optional]
+(require 'epy-completion) ;; If you want the autocompletion settings [optional]
+(require 'epy-editing)    ;; For configurations related to editing [optional]
+(require 'epy-nose)       ;; For nose integration
+
+(add-hook 'python-mode-hook (function cscope:hook))

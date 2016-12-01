@@ -26,3 +26,5 @@ echo "Running jewel"
 cd $NEW
 ./vstart.sh
 /home/owasserm/scripts/run_gateway.sh -b $NEW/ $ZONE
+
+/home/owasserm/scripts/run_gateway.sh -b $NEW/ -p 8001 $ZONE 
