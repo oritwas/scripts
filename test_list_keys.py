@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import boto
 import boto.s3.connection
 
@@ -70,7 +71,7 @@ for i in range(2000, num_objs):
     obj.set_contents_from_string('overwrite3' + obj.key)
     print 'overwrite3 ' + obj.key
 
-print 'list object versioning on '
+print 'list object versioning on 's
 i = 0
 for k in bucket.list():
     print 'obj ' + `i`

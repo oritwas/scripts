@@ -1,4 +1,6 @@
 BIN=/home/owasserm/teuthology
-MACHINE_TYPE=mira
+MACHINE_TYPE=smithi
 BRANCH=$1
-$BIN/virtualenv/bin/teuthology-suite --suite rgw --suite-branch master  --email owasserm@redhat.com --ceph  $BRANCH --machine-type $MACHINE_TYPE $2
+SUITE_BRANCH=" --suite-branch ${2:-"master"}"
+$BIN/virtualenv/bin/teuthology-suite -v --suite rgw   --subset 1/3 --email owasserm@redhat.com --ceph  $BRANCH --machine-type $MACHINE_TYPE $3
+

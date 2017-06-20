@@ -34,8 +34,8 @@ def test_bucket():
         print k
 
     for o in bucket.list(prefix='obj'):
-        print(o.key)                                             
-        
+        print(o.key)
+
     result = bucket.delete_keys(keys_to_delete)
     print result
 

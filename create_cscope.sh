@@ -6,4 +6,4 @@ find  . -type f -name "*.hpp" -print  >>  ./cscope.files
 find  . -type f -name "*.cc" -print  >> ./cscope.files
 find  . -type f -name "*.py" -print  >> ./cscope.files
 
-cscope -b -v
+cscope -R -q -b -v

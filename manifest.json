@@ -1,0 +1,18 @@
+[
+ { "path": "new/segaa",
+   "etag": "b5569ee4b2bd227f202ccf3daf036b60",
+   "size_bytes": 2097152
+ },
+ { "path": "new/segab",
+   "etag": "9df301504ca3437f5244d781d33e7574",
+   "size_bytes": 2097152
+ },
+ { "path": "new/segac",
+   "etag": "87b6f0f47900d129d93b049caee7f724",
+   "size_bytes": 2097152
+ },
+ { "path": "new/sagad",
+   "etag": "1035d04ee5f8d231ec64739d41587233",
+   "size_bytes": 2097152
+ }
+]

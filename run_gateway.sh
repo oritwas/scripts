@@ -20,11 +20,16 @@ while [ $# -gt 0 ]; do
 	-c|--config)
 	    CEPH_CONFIG="$2"
 	    ;;
+	-e|--extra)
+	    EXTRA="$2"
+	    ;;
 	*)
             # unknown option
-	    ;;    
+	    ;;
     esac
     shift # past argument
 done
 
-$CEPH_BIN/radosgw --log-file ./out/$rgw_name.log --rgw-frontends="civetweb port=$PORT" $CEPH_CONFIG --debug-rgw=20 --debug-ms=5 $ZONE
+# --rgw-max-objs-per-shard=8
+
+$CEPH_BIN/radosgw --log-file ./out/$rgw_name.log --rgw-frontends="civetweb port=$PORT" $CEPH_CONFIG --debug-rgw=20 --debug-ms=5 $ZONE $EXTRA

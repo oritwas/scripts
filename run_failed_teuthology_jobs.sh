@@ -6,19 +6,14 @@
 #while read description ; do echo -n $description, ; done | \
 #sed -e 's/,$//')
 
-#filter="rgw/singleton/{overrides.yaml xfs.yaml all/radosgw-admin-data-sync.yaml frontend/apache.yaml fs/xfs.yaml rgw_pool_type/ec.yaml}"
-#filter="rgw/singleton/{overrides.yaml xfs.yaml all/radosgw-admin-multi-region.yaml frontend/civetweb.yaml fs/xfs.yaml rgw_pool_type/ec-cache.yaml}"
-#filter="rgw/singleton/{overrides.yaml xfs.yaml all/radosgw-admin-data-sync.yaml frontend/civetweb.yaml fs/xfs.yaml rgw_pool_type/ec-profile.yaml}"
-#filter="rgw/verify/{overrides.yaml clusters/fixed-2.yaml frontend/apache.yaml fs/xfs.yaml msgr-failures/few.yaml rgw_pool_type/ec-cache.yaml tasks/rgw_s3tests.yaml validater/lockdep.yaml}"
-filter="smoke/basic/{clusters/fixed-3-cephfs.yaml fs/btrfs.yaml tasks/rgw_s3tests.yaml}"
+filter="rgw/singleton/{overrides.yaml xfs.yaml all/radosgw-admin-multi-region.yaml frontend/civetweb.yaml fs/xfs.yaml rgw_pool_type/ec-profile.yaml}"
 MACHINE_TYPE=vps
-SUITE=smoke
+SUITE=rgw
 SUITE_BRANCH=master
-BRANCH=wip-hammer-11567
+BRANCH=wip-orit-testing
 
 ./virtualenv/bin/teuthology-suite --filter="$filter" \
   --suite $SUITE --suite-branch $SUITE_BRANCH \
   --machine-type $MACHINE_TYPE \
   --email owasserm@redhat.com \
-  --owner owasserm@redhat.com  \
   --ceph $BRANCH 

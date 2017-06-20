@@ -1,7 +1,9 @@
+#!/usr/bin/env python
 import boto.exception
 import boto.s3.connection
 import boto.s3.acl
 import itertools
+import os
 
 from nose.tools import eq_ as eq
 
@@ -130,7 +132,7 @@ def test_bucket_create_special_key_names():
         calling_format=boto.s3.connection.OrdinaryCallingFormat(),
         )
 
-    bucket = connection.create_bucket('bucket1')    
+    bucket = connection.create_bucket('bucket1')
     key_names = [
         '_goodobj',
         '__badobj',
@@ -138,9 +140,10 @@ def test_bucket_create_special_key_names():
         '_ _bad',
         '_a_rest',
         '_b__',
+        'end_',
     ]
     bucket = _create_keys(connection, bucket=bucket, keys=key_names)
-    print 'test_bucket_create_special_key_names ' + bucket.name 
+    print 'test_bucket_create_special_key_names ' + bucket.name
 
     b = connection.get_bucket('bucket1')
     for k in bucket.list():
@@ -149,18 +152,17 @@ def test_bucket_create_special_key_names():
     for k in key_names:
         obj = b.get_key(k)
         print obj
-        
+
     print 'bucket ' + bucket.name + ' delete keys:'
     for k in bucket.list():
         print k
         bucket.delete_key(k)
 
-    print 'bucket ' + bucket.name + ' version:'        
+    print 'bucket ' + bucket.name + ' version:'
     for version in bucket.list_versions():
         print 'delete ' + version.name + ' id ' + version.version_id
         bucket.delete_key(version.name, version_id = version.version_id)
 
-        
     print 'delete bucket ' + bucket.name
     try:
         connection.delete_bucket(bucket)
@@ -169,7 +171,7 @@ def test_bucket_create_special_key_names():
         for k in bucket.list():
             print k
 
-        print 'bucket ' + bucket.name + ' versions:'        
+        print 'bucket ' + bucket.name + ' versions:'
         for version in bucket.list_versions():
             print ' key ' + version.name + ' id ' + version.version_id
         raise e

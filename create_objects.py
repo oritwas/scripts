@@ -10,6 +10,8 @@ from boto.connection import AWSAuthConnection
 parser = argparse.ArgumentParser(description='create objects')
 parser.add_argument('--num', type=int, action='store', default=100 )
 parser.add_argument('--bucket', type=str, action='store', default='bucket1' )
+parser.add_argument('--host', type=str, action='store', default='127.0.0.1' )
+parser.add_argument('--port', type=int, action='store', default=8000 )
 
 args = parser.parse_args()
 
@@ -20,8 +22,8 @@ connection = boto.s3.connection.S3Connection(
     aws_access_key_id=s3_access_key,
     aws_secret_access_key=s3_secret_key,
     is_secure=False,
-    port=8000,
-    host='127.0.0.1',
+    port=args.port,
+    host=args.host,
     calling_format=boto.s3.connection.OrdinaryCallingFormat(),
 )
 

@@ -8,6 +8,7 @@ export CEPH_OUT_DIR=$OUT_DIR/out
 export CEPH_DEV_DIR=$OUT_DIR/dev
 
 # copy ceph.conf to the new
+#cp $OUT_DIR/ceph.conf $NEW/.
 #cp $OLD/ceph.conf $NEW/.
 # change ec dir:
 #	erasure code dir = ./.libs
