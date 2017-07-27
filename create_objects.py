@@ -5,13 +5,23 @@ import boto.s3.acl
 import argparse
 import os
 
+import threading
 from boto.connection import AWSAuthConnection
+
+def create_objs(start, end)
+  print 'creating objs start '+ start + ' end ' + end
+  for i in range(start, end):
+    obj = boto.s3.key.Key(bucket)
+    obj.key = 'obj' + `i`
+    obj.set_contents_from_string('This is a test of S3')
+  print 'creating objs start '+ start + ' end ' + end
 
 parser = argparse.ArgumentParser(description='create objects')
 parser.add_argument('--num', type=int, action='store', default=100 )
 parser.add_argument('--bucket', type=str, action='store', default='bucket1' )
 parser.add_argument('--host', type=str, action='store', default='127.0.0.1' )
-parser.add_argument('--port', type=int, action='store', default=8000 )
+parser.add_argument('--port', type=int, action='store', default=8000)
+parser.add_argument('--slice', type=int, action='store', default=1000)
 
 args = parser.parse_args()
 
@@ -30,12 +40,11 @@ connection = boto.s3.connection.S3Connection(
 print 'create a bucket'
 bucket = connection.create_bucket(args.bucket)
 
-for i in range(args.num):
-    print 'creating obj'+ `i`
-    obj = boto.s3.key.Key(bucket)
-    obj.key = 'obj' + `i`
-    obj.set_contents_from_string('This is a test of S3')
-
+for start  in range(args.num):
+    end = min(args.num, start + args.slice)
+    t = threading.Thread(target = create_objs, args=(start, end)).start()
+    start = end
+    
 print 'list objects'
 i = 0
 for k in bucket.list():
