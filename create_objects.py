@@ -13,8 +13,8 @@ def create_objs(bucket, start, end):
   for i in range(start, end):
     obj = boto.s3.key.Key(bucket)
     obj.key = 'obj' + `i`
+    print 'creating '+ obj.key
     obj.set_contents_from_string('This is a test of S3')
-  print 'creating objs start '+ `start` + ' end ' + `end`
 
 def list_bucket(bucket):
     print 'list objects'
@@ -30,7 +30,7 @@ parser.add_argument('--bucket', type=str, action='store', default='bucket1' )
 parser.add_argument('--host', type=str, action='store', default='127.0.0.1' )
 parser.add_argument('--port', type=int, action='store', default=8000)
 parser.add_argument('--slice', type=int, action='store', default=1000)
-parser.add_argument('--num_threads', type=int, action='store', default=100)
+parser.add_argument('--num_threads', type=int, action='store', default=1)
 
 args = parser.parse_args()
 

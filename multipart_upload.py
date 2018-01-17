@@ -69,6 +69,8 @@ if __name__ == "__main__":
     parser.add_argument('--secret',type=str, action='store', default=s3_secret_key)
     parser.add_argument('--num', type=int, action='store', default=100 )
     parser.add_argument('--bucket', type=str, action='store', default='bucket1' )
+    parser.add_argument('--size', type=int, action='store', default=5 * 1024 * 1024 )
+    parser.add_argument('--obj_name', type=str, action='store', default="obj")
 
     args = parser.parse_args()
 
@@ -87,9 +89,10 @@ if __name__ == "__main__":
     content_type='text/bla'
     for i in range(args.num):
         print 'creating mulitpart obj' +`i`
-        objlen = 30 * 1024 * 1024
-        key_name = 'obj' + `i`
-        (upload, data) = _multipart_upload(bucket, key_name, objlen, headers={'Content-Type': content_type}, metadata={'foo': 'bar'})
+        objlen = args.size
+        key_name = args.obj_name + `i`
+        (upload, data) = _multipart_upload(bucket, key_name, objlen, headers={'Content-Type': content_type},
+                                           metadata={'foo': 'bar'})
         upload.complete_upload()
         key = bucket.get_key(key_name)
         print key
