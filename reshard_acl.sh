@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CEPH_BIN=/home/owasserm/ceph/build/bin
+CEPH_BIN=${1:-"./bin"}
 
 s3 -us  create publicbucket cannedAcl=public-read-write
 
@@ -8,12 +8,8 @@ for i in {1..10}; do curl -X PUT http://localhost:8000/publicbucket/obj$i -d "@n
 
 s3 -us list publicbucket
 
-s3 -us getacl publicbucket filename=publicbucket.acl
-
-cat publicbucket.acl
+$HOME/scripts/get_bucket_acl.sh publicbucket
 
 $CEPH_BIN/radosgw-admin bucket reshard --bucket=publicbucket --num-shards=10
 
-s3 -us getacl publicbucket filename=publicbucket2.acl
-
-cat publicbucket2.acl
+$HOME/scripts/get_bucket_acl.sh publicbucket

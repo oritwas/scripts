@@ -33,4 +33,4 @@ done
 # --rgw-max-objs-per-shard=8
 
 $CEPH_BIN/radosgw --log-file ./out/$rgw_name.log --rgw-frontends="civetweb port=$PORT" $CEPH_CONFIG --debug-rgw=20 --debug-ms=1 $ZONE $EXTRA
-/home/owasserm/scripts/create_user.sh
+/home/owasserm/scripts/create_user.sh $CEPH_BIN
