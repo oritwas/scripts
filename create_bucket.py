@@ -13,7 +13,7 @@ args = parser.parse_args()
 
 s3_access_key=os.environ['S3_ACCESS_KEY_ID']
 s3_secret_key=os.environ['S3_SECRET_ACCESS_KEY']
- 
+
 connection = boto.s3.connection.S3Connection(
     aws_access_key_id= s3_access_key,
     aws_secret_access_key=s3_secret_key,

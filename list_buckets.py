@@ -1,7 +1,9 @@
+#!/usr/bin/env python
 import boto.exception
 import boto.s3.connection
 import boto.s3.acl
 import argparse
+import os
 
 from boto.connection import AWSAuthConnection
 
