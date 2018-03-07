@@ -1,4 +1,4 @@
-CEPH_BIN=./src
+CEPH_BIN=${1:-."/bin"}
 
 $CEPH_BIN/radosgw-admin realm create --rgw-realm=realm0 --default
 $CEPH_BIN/radosgw-admin zonegroup set < region0.json

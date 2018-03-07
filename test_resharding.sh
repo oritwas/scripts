@@ -30,11 +30,11 @@ function test_admin_commands()
         return
     fi
 
-#    echo "resharding execute" $BUCKET_NAME
- #   $BIN/radosgw-admin reshard execute --bucket $BUCKET_NAME -c $CONF
-  #  if [ $? -ne 0 ]; then
-   #     return
-    #fi
+    echo "resharding execute" $BUCKET_NAME
+    $BIN/radosgw-admin reshard execute --bucket $BUCKET_NAME -c $CONF
+   if [ $? -ne 0 ]; then
+      return
+   fi
 }
 
 function test_dynamic_resharding()
